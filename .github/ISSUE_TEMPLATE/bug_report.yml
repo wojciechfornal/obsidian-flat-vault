@@ -1,0 +1,65 @@
+name: Bug Report
+description: Report incorrect behavior, a crash, or malformed output
+title: "[module]: "
+labels: ["bug", "triage"]
+assignees:
+  - wojciechfornal
+body:
+  - type: dropdown
+    id: module
+    attributes:
+      label: Affected Module / Component
+      description: Where does the problem seem to originate? Pick the closest match.
+      multiple: false
+      options:
+        - "Assembler (src/core/assembler.ts - note formatting, dir/toc compilation)"
+        - "Crawler (src/core/crawler.ts - file discovery, exclusions, ordering)"
+        - "Registry (src/core/registry.ts - note catalog, lookups)"
+        - "Exporter (src/core/exporter.ts - writing output file)"
+        - "CLI & Options (src/cli/ - arguments, flags, exit codes, console output)"
+        - "Domain & Types (src/shared/types.ts, src/utils/)"
+        - "Build & Distribution (tsc, esbuild bundle, bun compile)"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected instead.
+      placeholder: "Notes inside `notes/` are exported in a random order instead of alphabetically..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Exact command and a minimal vault layout (file tree and relevant note content) that triggers the bug.
+      placeholder: |
+        pnpm dev --vault=./my-vault --mode=dir --debug
+
+        my-vault/
+        ├── notes/
+        │   ├── b.md
+        │   └── a.md
+        └── root.md
+    validations:
+      required: true
+
+  - type: textarea
+    id: output
+    attributes:
+      label: Console output / exported fragment
+      description: Paste the console output (run with `--debug` if possible) and/or the relevant part of the generated `_compiled/*.md` file.
+      render: shell
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: How FlatVault was run (dev / start / bundle / compiled binary), FlatVault version or commit, Node.js (or Bun) version, OS.
+      placeholder: "pnpm dev, 0.0.1-beta (abc1234), Node 26.5.0, macOS 26.1"
+    validations:
+      required: true
